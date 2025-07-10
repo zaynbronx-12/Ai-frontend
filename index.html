@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Univerx AI</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f5f7fa;
+    text-align: center;
+    padding: 20px;
+  }
+  h1 {
+    color: #4a90e2;
+  }
+  #chatbox {
+    margin-top: 20px;
+  }
+  input {
+    padding: 10px;
+    width: 70%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  button {
+    padding: 10px 15px;
+    background: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  #response {
+    margin-top: 20px;
+    background: white;
+    padding: 10px;
+    border-radius: 4px;
+    display: inline-block;
+    min-width: 200px;
+  }
+</style>
+</head>
+<body>
+
+<h1>🤖 Univerx AI</h1>
+
+<div id="chatbox">
+  <input type="text" id="userInput" placeholder="Say something..." />
+  <button onclick="sendMessage()">Send</button>
+</div>
+
+<div id="response">Waiting for your message…</div>
+
+<script>
+function sendMessage() {
+  const msg = document.getElementById("userInput").value;
+  document.getElementById("response").textContent = "Thinking…";
+
+  fetch("https://ai-backend-jece.onrender.com/chat?msg=" + encodeURIComponent(msg))
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById("response").textContent = data.response || JSON.stringify(data);
+    })
+    .catch(err => {
+      document.getElementById("response").textContent = "Error connecting to backend.";
+    });
+}
+</script>
+
+</body>
+</html>
